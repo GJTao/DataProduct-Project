@@ -1,0 +1,60 @@
+Agricultural Pesticide Use in California (2004-2014)
+========================================================
+
+J. T.
+
+May 5, 2016
+
+This is a pitch presentation for the application:
+<https://jtjx2016.shinyapps.io/PestApp/>
+
+Preview
+========================================================
+
+<div align="center">
+<img src="pic1.png" width=1000 height=600>
+</div>
+
+
+Agriculture in California
+========================================================
+
+* The leading US state in cash farm receipts with combined commodities representing nearly 13 percent of the US total.
+
+* In 2014, 76,400 farms and ranches received approximately $54 billion for their output. 
+
+* Over a third of the country's vegetables and two-thirds of the country's fruits and nuts.
+
+Pesticide Use
+========================================================
+* When used properly, pesticides protect people and their environment from pests that threaten human health and the balance of nature.
+
+*  The beneficial use of pesticides depends on information
+and sound judgment. 
+
+What is this shiny application for pesticide use?
+========================================================
+This application allows the user to explore agricultural pesticide use in California and view a trend plot of indiviual county in 2004 - 2014. It also shows top 10 counties in pesticide use of indiviual year. The user can:
+
+* Select from 58 counties
+
+* Select from years between 2004 and 2014
+
+Data Source of this Application
+========================================================
+The data is from the California Department of Pesticide Regulation's annual summary of [Pesticide Use Reporting](http://www.cdpr.ca.gov/docs/pur/purmain.htm) program.
+
+```{r, echo=FALSE, fig.width=16}
+Pesticide <- read.csv("CA_PesticideUse_byCounty_04-14.csv")
+library(dplyr)
+library(ggplot2)
+statetotal <- Pesticide %>%
+        group_by(Year)%>%
+        summarise(lbs = sum(lbs))
+ggplot(statetotal, aes(x=Year, y=lbs))+
+        geom_line(size = 1.5, colour="darkblue") +
+        labs(x="\nYear", y="Use (lbs Active Ingredient)\n",
+             title="Annual Pesticide Use in California") +
+        theme(text = element_text(size=32))
+                        
+```
